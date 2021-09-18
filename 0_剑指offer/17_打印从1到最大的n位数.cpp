@@ -10,3 +10,20 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    vector<int> printNumbers(int n) {
+        int end = 0;
+        while (n != 0) {
+            end = end * 10 + 9;
+            --n;
+        }
+        cout << end << endl;
+        vector<int> ans(end, 0);
+        for (int i = 1; i <= end; ++i) {
+            ans[i - 1] = i;
+        }
+        return ans;
+    }
+};
