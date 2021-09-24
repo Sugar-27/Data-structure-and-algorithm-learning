@@ -2,7 +2,7 @@
 class Solution {
 public:
     // 因为最后的结果只与前一个动态转移数组有关，因此只需要设置一个一维的动态转移数组
-    // 原本dp[i][j]表示的是前i个骰子的点数之和为j的概率，现在只需要知道最后的状态数组，因此用一个一维数组dp[j表示n个骰子下每个结果的概率
+    // 原本dp[i][j]表示的是前i个骰子的点数之和为j的概率，现在只需要知道最后的状态数组，因此用一个一维数组dp[j]表示n个骰子下每个结果的概率
     vector<double> dicesProbability(int n) {
         // 起始是一个骰子情况下的点数之和情况，就只有六个结果，初始化size为6
         dp = vector<double> (6, 1.0 / 6.0);
@@ -22,12 +22,12 @@ public:
                     temp[j + k] += dp[j] * (1.0 / 6.0);
                 }
             }
-            //i个骰子的点数之和全都算出来后，要将temp数组移交给dp数组
+            // i个骰子的点数之和全都算出来后，要将temp数组移交给dp数组
             // dp数组就会代表i个骰子时的可能出现的点数之和的概率；用于计算i+1个骰子时的点数之和的概率
             dp = temp;
         }
         return dp;
     }
 private:
-    vector<double> dp;
+    vector<double> dp;  
 };
