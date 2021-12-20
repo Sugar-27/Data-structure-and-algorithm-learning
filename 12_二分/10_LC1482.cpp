@@ -17,20 +17,22 @@ class Solution {
 
    private:
     //分析第T天的开花情况，制作m束花，每朵花要连续的k朵
-    bool ifMake(vector<int>& bloomDay, int m, int k, int T) {
+    bool ifMake(vector<int>& bloomDay, int m, int k, int mid) {
         int flowers = 0;
-        int consecutiveFlower = 0;
+        int cnt = 0;
         for (int i = 0; i < bloomDay.size(); ++i) {
-            if (bloomDay[i] <= T) {
-                ++consecutiveFlower;
-                if (consecutiveFlower == k) {
+            if (bloomDay[i] <= mid) {
+                ++cnt;
+                if (cnt == k) {
                     ++flowers;
-                    consecutiveFlower = 0;
+                    if (flowers == m)
+                        return true;
+                    cnt = 0;
                 }
             } else {
-                consecutiveFlower = 0;
+                cnt = 0;
             }
         }
-        return flowers >= m;
+        return false;
     }
 };
