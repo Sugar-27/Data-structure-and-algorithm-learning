@@ -4,6 +4,7 @@
 
 using namespace std;
 
+/*
 int partition(vector<int>& a, int l, int r);
 void quickSort(vector<int>& array, int l, int r) {
     if (l >= r)
@@ -33,6 +34,26 @@ int partition(vector<int>& a, int l, int r) {
         }
     }
     return r;
+}
+*/
+
+void quickSort(vector<int>& nums, int l, int r) {
+    if (l >= r)
+        return;
+    int x = nums[(l + r) >> 1];
+    int i = l, j = r;
+    while (i <= j) {
+        while (nums[i] < x)
+            ++i;
+        while (nums[j] > x)
+            --j;
+        if (i == j)
+            break;
+        if (i < j)
+            swap(nums[i++], nums[j--]);
+    }
+    quickSort(nums, l, j);
+    quickSort(nums, j + 1, r);
 }
 
 int main() {
