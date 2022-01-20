@@ -9,8 +9,8 @@ class Solution {
             if (right >= nums.size() - 1)
                 return ans + 1;
             int next = now + 1;
-            for (int i = now + 2; i <= right;
-                 ++i) {  //遍历可到达的地方，选择一个下一次能跳最远的点
+            for (int i = now + 2; i <= right; ++i) {
+                //遍历可到达的地方，选择一个下一次能跳最远的点
                 int nextRight = i + nums[i];
                 if (nextRight > next + nums[next])
                     next = i;
