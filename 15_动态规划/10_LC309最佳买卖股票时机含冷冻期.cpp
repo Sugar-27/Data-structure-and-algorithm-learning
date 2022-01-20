@@ -1,4 +1,5 @@
 // 标准动态规划，这个里面还考虑了每次交易时的手续费
+// 考虑的是出边
 class Solution {
    public:
     int maxProfit(vector<int>& prices) { return maxProfit(prices, 0); }
