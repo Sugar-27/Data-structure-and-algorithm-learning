@@ -20,7 +20,6 @@ class Solution {
             cnt = cnt->next;
             ++n;
         }
-        delete (cnt);
 
         // 开始分割子链表，从长度为1开始，逐次翻倍，直到len长度为总长度
         ListNode *l, *mid, *r;
@@ -32,22 +31,22 @@ class Solution {
             // 同时保证r < n;
             int i;
             for (i = 0; i + 2 * len < n; i += 2 * len) {
-                mid = l;
+                mid = l->next;
                 for (int j = 0; j < len; ++j)
                     mid = mid->next;  // 实际上mid下一个才是mid
                 r = mid;
                 for (int j = 0; j < len; ++j)
                     r = r->next;  // r下一个才是r
-                l = merge(l, l->next, mid->next, r->next);
+                l = merge(l, l->next, mid, r);
             }
             if (n - i > len) {
-                mid = l;
+                mid = l->next;
                 for (int j = 0; j < len; ++j)
                     mid = mid->next;
                 r = mid;
                 for (int j = 0; j < n - i - len; ++j)
                     r = r->next;  // 不同之处，最后一组的数量达不到len的要求
-                l = merge(l, l->next, mid->next, r->next);
+                l = merge(l, l->next, mid, r);
             }
         }
         return protect->next;
