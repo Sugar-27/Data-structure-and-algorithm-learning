@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// 详细思路版：
 void merge(vector<int>& nums, int left, int mid, int right);
 void mergeSort(vector<int>& nums, int left, int right) {
     if (left >= right)
@@ -41,13 +42,36 @@ void merge(vector<int>& nums, int left, int mid, int right) {
     }
 }
 
+// 简洁版：
+void mergeSort2(vector<int>& nums, int l, int r) {
+    if (l >= r)
+        return;
+    int mid = (l + r) >> 1;
+    mergeSort2(nums, l, mid);
+    mergeSort2(nums, mid + 1, r);
+    // 使用数组，速度快非常多，大概是使用vector的两倍
+    int n = r - l + 1;
+    int temp[n];
+    int i = l, j = mid + 1, idx = 0;
+    while (i <= mid && j <= r) {
+        temp[idx++] = nums[i] < nums[j] ? nums[i++] : nums[j++];
+    }
+    while (i <= mid)
+        temp[idx++] = nums[i++];
+    while (j <= r)
+        temp[idx++] = nums[j++];
+    for (int i = 0; i < n; ++i) {
+        nums[l + i] = temp[i];
+    }
+}
+
 int main() {
     vector<int> nums = {3, 2, 4, 5, 6, 2, 9, 12, 1};
     // vector<int> nums2 = {3, 2, 4, 5, 6, 2, 9, 12, 1};
     for (auto& num : nums)
         cout << num << ' ';
     cout << endl;
-    mergeSort(nums, 0, nums.size() - 1);
+    mergeSort2(nums, 0, nums.size() - 1);
     for (auto& num : nums)
         cout << num << ' ';
     cout << endl;
