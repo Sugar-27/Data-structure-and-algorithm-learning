@@ -10,6 +10,8 @@ public:
         // i < j < k
         for (int i = 0; i < nums.size(); ++i) {
             if (i > 0 && nums[i] == nums[i - 1]) continue;
+            // 优化：如果nums[i]已经比0大，那么无论如何组合都不会有符合要求的数
+            if (nums[i] > 0)  break;
             vector<vector<int>> allTwoSum = twoSum(nums, i + 1, -nums[i]);
             for (vector<int>& jk : allTwoSum) {
                 ans.push_back({nums[i], jk[0], jk[1]});
