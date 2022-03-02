@@ -8,6 +8,7 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+// 这是自上而下的方法，从长度出发
 class Solution {
    public:
     ListNode* sortList(ListNode* head) {
@@ -83,5 +84,55 @@ class Solution {
                 ptr2 = ptr2->next;
             return ptr2;
         }
+    }
+};
+
+// 这是递归的写法，好写好想
+class Solution {
+   public:
+    ListNode* sortList(ListNode* head) {
+        // 递归结束
+        if (!head || !head->next)
+            return head;
+
+        // 找到左链表结束节点与右链表开始节点
+        ListNode* lend = findMid(head);
+        ListNode* rstart = lend->next;
+        // 断开左右链表
+        lend->next = nullptr;
+
+        // 递归排序
+        ListNode* left = sortList(head);
+        ListNode* right = sortList(rstart);
+        return merge(left, right);
+    }
+
+   private:
+    ListNode* merge(ListNode* left, ListNode* right) {
+        ListNode* protect = new ListNode(0);
+        ListNode* pre = protect;
+        while (left && right) {
+            if (left->val < right->val) {
+                pre->next = left;
+                left = left->next;
+            } else {
+                pre->next = right;
+                right = right->next;
+            }
+            pre = pre->next;
+        }
+        if (left)
+            pre->next = left;
+        if (right)
+            pre->next = right;
+        return protect->next;
+    }
+    ListNode* findMid(ListNode* head) {
+        ListNode *slow = head, *fast = head;
+        while (slow && fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
     }
 };
