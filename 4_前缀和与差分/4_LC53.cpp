@@ -18,3 +18,18 @@ class Solution {
         return ans;
     }
 };
+
+// 补充动态规划做法（动态规划）
+// 和股票的题很像，只要出现值使得前面的和是负的那么就直接不要了
+// 因为只要是负数对后面的影响都是不好的
+class Solution {
+   public:
+    int maxSubArray(vector<int>& nums) {
+        int pre = 0, ans = INT_MIN;
+        for (int& n : nums) {
+            pre = max(pre + n, n);
+            ans = max(pre, ans);
+        }
+        return ans;
+    }
+};
