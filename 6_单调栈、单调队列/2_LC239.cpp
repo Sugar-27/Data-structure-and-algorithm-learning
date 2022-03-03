@@ -1,17 +1,20 @@
 class Solution {
-public:
+   public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         vector<int> ans;
         // 双端队列，存下标（代表时间）
         deque<int> q;
         for (int i = 0; i < nums.size(); i++) {
             // 保证队头合法性
-            while (!q.empty() && q.front() <= i - k) q.pop_front();
+            while (!q.empty() && q.front() <= i - k)
+                q.pop_front();
             // 维护队列单调性，插入新的选项
-            while (!q.empty() && nums[q.back()] <= nums[i]) q.pop_back();
+            while (!q.empty() && nums[q.back()] <= nums[i])
+                q.pop_back();
             q.push_back(i);
             // 取队头更新答案
-            if (i >= k - 1) ans.push_back(nums[q.front()]);
+            if (i >= k - 1)
+                ans.push_back(nums[q.front()]);
         }
         return ans;
     }
@@ -29,3 +32,25 @@ public:
 1, 3, [-1, -3, -5] 3 6 7
 
 5*/
+
+// 双端队列解法
+class Solution {
+   public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        // 使用双端队列，里面存可能的最大值的坐标，每次更新的时候只要队头的坐标合法则队头是最大值
+        // 对于队尾，每次更新的时候如果当前的值比队尾大，则意味着现在的队尾永远都不会用上了，因此用当前的值替换队尾，直到队尾的值比当前的值大
+        deque<int> q;
+        vector<int> ans;
+        for (int i = 0; i < nums.size(); ++i) {
+            //  i - q.front() + 1 > k
+            while (!q.empty() && q.front() <= i - k)
+                q.pop_front();
+            while (!q.empty() && nums[q.back()] <= nums[i])
+                q.pop_back();
+            q.push_back(i);
+            if (i >= k - 1)
+                ans.push_back(nums[q.front()]);
+        }
+        return ans;
+    }
+};
