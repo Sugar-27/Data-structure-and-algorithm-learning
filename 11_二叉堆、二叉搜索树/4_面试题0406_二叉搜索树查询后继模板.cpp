@@ -15,11 +15,45 @@
 思路如下：
 对于给定查询的数值val，考虑如下几种情况：
 当前root的值小于val，则如果该树有val的后继那一定是在root的右节点树上
-当前root的值大于val，则如果该树有val的后继那一定是在root的坐节点树上
+当前root的值大于val，则如果该树有val的后继那一定是在root的左节点树上
 当前root的值等于val，则如果root有右子树，那么后继就存在于root右子树的左子树一路向左遍历的最后一个节点；如果root没有右子树，则后继应当存在于之前遍历过比它大的节点中；
 
 因此，我们使用一个cur来遍历二叉搜索树，用一个ans记录所有比目标val大的值，并在遍历的过程中遇到比val大但比ans小的节点时更新ans
 */
+// 新写法，比原先更易理解
+class Solution {
+   public:
+    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        return find(root, p->val);
+    }
+
+   private:
+    TreeNode* find(TreeNode* root, int val) {
+        TreeNode* cur = root;
+        TreeNode* ans = nullptr;
+        while (cur) {
+            if (cur->val < val) {
+                cur = cur->right;
+            } else if (cur->val > val) {
+                if (ans == nullptr || ans->val > cur->val)
+                    ans = cur;
+                cur = cur->left;
+            } else {
+                if (cur->right) {
+                    cur = cur->right;
+                    while (cur->left) {
+                        cur = cur->left;
+                    }
+                    return cur;
+                }
+                break;
+            }
+        }
+        return ans;
+    }
+};
+
+// 老写法
 class Solution {
    public:
     TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
