@@ -33,35 +33,26 @@ class Solution {
 // 优化空间复杂度，每一天的状态的值仅与前一天有关
 // 因此不需要O(n)的空间复杂度，只需要O(2)的空间来记录相邻两天的变化
 class Solution {
-   public:
-    int maxProfit(int c, vector<int>& prices) {
+public:
+    int maxProfit(int k, vector<int>& prices) {
         int n = prices.size();
-        // Move prices from [0..n-1] to [1..n]
+        vector<vector<vector<int>>> dp(2, vector<vector<int>>(2, vector<int>(k + 1, -1e9)));
+        dp[0][0][0] = 0;
         prices.insert(prices.begin(), 0);
-
-        // Initialize DP array
-        vector<vector<vector<int>>> f(
-            2, vector<vector<int>>(2, vector<int>(c + 1, -1000000000)));
-        f[0 & 1][0][0] = 0;
-
-        // DP
-        for (int i = 1; i <= n; i++)
-            for (int j = 0; j <= 1; j++)
-                for (int k = 0; k <= c; k++) {
-                    f[i & 1][j][k] = f[(i - 1) & 1][j][k];
-                    if (j == 0)
-                        f[i & 1][0][k] = max(f[i & 1][0][k],
-                                             f[(i - 1) & 1][1][k] + prices[i]);
-                    if (j == 1 && k > 0)
-                        f[i & 1][1][k] =
-                            max(f[i & 1][1][k],
-                                f[(i - 1) & 1][0][k - 1] - prices[i]);
-                }
-
-        // Calculate the target
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 0; j <= k; ++j) {
+                // 不持有
+                dp[i & 1][0][j] = max(dp[i - 1 & 1][0][j], dp[i - 1 & 1][1][j] + prices[i]);
+                // 持有
+                dp[i & 1][1][j] = dp[i - 1 & 1][1][j];
+                if (j > 0)
+                    dp[i & 1][1][j] = max(dp[i - 1 & 1][1][j], dp[i - 1 & 1][0][j - 1] - prices[i]);
+            }
+        }
         int ans = 0;
-        for (int k = 0; k <= c; k++)
-            ans = max(ans, f[n & 1][0][k]);
+        for (int i = 1; i <= k; ++i) {
+            ans = max(ans, dp[n & 1][0][i]);
+        }
         return ans;
     }
 };
