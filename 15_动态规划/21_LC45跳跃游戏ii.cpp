@@ -39,3 +39,26 @@ class Solution {
         return dp[n - 1];
     }
 };
+
+// 补个贪心
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 1) return 0;
+        int ans = 0;
+        for (int i = 0; i < n;) {
+            int right = nums[i] + i;
+            if (right >= n - 1) return ans + 1;
+            int nx = right;
+            for (int j = i; j <= right; ++j) {
+                if (j + nums[j] > nx + nums[nx]) {
+                    nx = j;
+                }
+            }
+            i = nx;
+            ++ans;
+        }
+        return ans;
+    }
+};

@@ -38,6 +38,33 @@ class Solution {
     }
 };
 
+// 优化空间
+class Solution {
+   public:
+    int maxSubarraySumCircular(vector<int>& nums) {
+        int n = nums.size();
+        if (n < 2)
+            return nums[0];
+        nums.insert(nums.begin(), 0);
+        vector<int> sums(n + 1, 0);
+        int tmp1 = 1e9;
+        int tmp2 = -1e9;
+        int preSumMax = -1e9;
+        int preSumMin = 1e9;
+        int sum = 0;
+        for (int i = 1; i <= n; ++i) {
+            sum += nums[i];
+            sums[i] = sums[i - 1] + nums[i];
+            tmp1 = min(tmp1, sums[i - 1]);
+            if (i >= 2)
+                tmp2 = max(tmp2, sums[i - 1]);
+            preSumMax = max(preSumMax, sums[i] - tmp1);
+            preSumMin = min(preSumMin, sums[i] - tmp2);
+        }
+        return preSumMax >= sum - preSumMin ? preSumMax : sum - preSumMin;
+    }
+};
+
 // 环形数组变成循环dp解法
 // 用一个单调队列来维护i之前最小的前缀和
 // 单调队列本质上就是一个滑动窗口，只是这个窗口的上下限由队列的入队出队规则来定
