@@ -1,3 +1,20 @@
+// 新做法，快慢指针
+class Solution {
+   public:
+    ListNode* getKthFromEnd(ListNode* head, int k) {
+        ListNode* tail = head;
+        while (k > 0) {
+            tail = tail->next;
+            --k;
+        }
+        while (tail) {
+            head = head->next;
+            tail = tail->next;
+        }
+        return head;
+    }
+};
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -7,7 +24,7 @@
  * };
  */
 class Solution {
-public:
+   public:
     ListNode* getKthFromEnd(ListNode* head, int k) {
         vector<ListNode*> record;
         while (head != nullptr) {
