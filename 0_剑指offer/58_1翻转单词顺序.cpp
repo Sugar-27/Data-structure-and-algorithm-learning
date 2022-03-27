@@ -1,3 +1,24 @@
+// 双指针
+class Solution {
+public:
+    string reverseWords(string s) {
+        string ans;
+        int r = s.length() - 1;
+        while (r >= 0) {
+            while (r >= 0 && s[r] == ' ') --r;
+            if (r < 0) break;
+            int l = r;
+            while (l >= 0 && s[l] != ' ') --l;
+            ans.append(s.substr(l + 1, r - l));
+            ans.push_back(' ');
+            r = l;
+        }
+        if (!ans.empty())
+            ans.pop_back();
+        return ans;
+    }
+};
+
 // 原地修改字符串，空间复杂度O(1)
 class Solution {
 public:
