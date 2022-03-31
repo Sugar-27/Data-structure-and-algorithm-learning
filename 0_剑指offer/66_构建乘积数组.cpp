@@ -21,3 +21,21 @@ public:
         return b;
     }
 };
+
+class Solution {
+public:
+    vector<int> constructArr(vector<int>& a) {
+        int n = a.size();
+        vector<int> b(n, 1);
+        for (int i = 1; i < n; ++i) {
+            b[i] = b[i - 1] * a[i - 1];
+        }
+        vector<int> tmp(n, 1);
+        for (int i = n - 2; i >= 0; --i) {
+            // tmp数组可以只用一个变量来维护
+            tmp[i] = tmp[i + 1] * a[i + 1];
+            b[i] *= tmp[i];
+        }
+        return b;
+    }
+};
