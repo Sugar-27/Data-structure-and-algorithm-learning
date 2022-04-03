@@ -13,6 +13,9 @@ class Solution {
             dp[i][0] = i;
         for (int j = 0; j <= n; ++j)
             dp[0][j] = j;
+        // dp[i - 1][j] + 1删除掉第i个字符
+        // dp[i][j - 1] + 1添加一个字符
+        // dp[i - 1][j - 1]看是否要替换一个字符，相同就不动，不同就替换
         for (int i = 1; i <= m; ++i) {
             for (int j = 1; j <= n; ++j) {
                 dp[i][j] = min(dp[i - 1][j] + 1,
