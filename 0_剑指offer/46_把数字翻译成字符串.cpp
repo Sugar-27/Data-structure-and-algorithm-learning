@@ -24,3 +24,25 @@ public:
         return dp[len - 1];
     }
 };
+// 优化空间复杂度
+class Solution {
+public:
+    int translateNum(int num) {
+        if (num < 10) return 1;
+        string n = to_string(num);
+        int len = n.length();
+        int a = 1;
+        int b = stoi(n.substr(0, 2)) < 26 && stoi(n.substr(0, 2)) >= 10 ? 2 : 1;
+        for (int i = 2; i < len; ++i) {
+            int c;
+            if (stoi(n.substr(i - 1, 2)) < 26 && stoi(n.substr(i - 1, 2)) >= 10) {
+                c = a + b;
+            } else {
+                c = b;
+            }
+            a = b;
+            b = c;
+        }
+        return b;
+    }
+};96
