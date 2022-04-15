@@ -9,10 +9,12 @@ class Solution {
 
         for (char ch : s) {
             if (ch >= '0' && ch <= '9') {
+                // 遇到的是数字
                 val = val * 10 + ch - '0';
                 numStart = true;
                 continue;
             } else if (numStart) {
+                // 遇到的其他，且之前有数字，将数字存进后缀表达式
                 numStart = false;
                 tokens.push_back(to_string(val));
                 needs_zero = false;
@@ -23,11 +25,13 @@ class Solution {
                 continue;
 
             if (ch == '(') {
+                // 处理括号
                 ops.push(ch);
                 needs_zero = true;
                 continue;
             }
             if (ch == ')') {
+                // 遇到右括号，将里面所有的操作符放到后缀表达式里
                 while (ops.top() != '(') {
                     tokens.push_back(string(1, ops.top()));
                     ops.pop();
@@ -39,7 +43,7 @@ class Solution {
             }
 
             // 处理+-*/
-            if (needs_zero == true)
+            if (needs_zero)
                 tokens.push_back("0");
             while (!ops.empty() && getRank(ops.top()) >= getRank(ch)) {
                 // 前面的符号优先级更高，就可以计算了，例如1*2+3，遇到+时，*就可以算了
@@ -83,7 +87,7 @@ class Solution {
         return stk.top();
     }
 
-    long long eval(int a, int b, string token) {
+    long long eval(int a, int b, string& token) {
         if (token == "+")
             return a + b;
         if (token == "-")
