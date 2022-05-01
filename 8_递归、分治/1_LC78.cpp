@@ -1,3 +1,7 @@
+// 子集是收集树形结构中树的所有节点的结果。
+
+// 而组合问题、分割问题是收集树形结构中叶子节点的结果
+
 // 子集递归模板题
 
 class Solution {
@@ -25,4 +29,27 @@ public:
 private:
     vector<vector<int>> ans;
     vector<int> temp;
+};
+
+// 全排列的思想来做
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        n = nums.size();
+        dfs(nums, 0);
+        return ans;
+    }
+private:
+    void dfs(vector<int>& nums, int idx) {
+        ans.push_back(tmp);
+        for (int i = idx; i < n; ++i) {
+            if (i > idx && nums[i] == nums[i - 1]) continue;
+            tmp.push_back(nums[i]);
+            dfs(nums, i + 1);
+            tmp.pop_back();
+        }
+    }
+    int n;
+    vector<vector<int>> ans;
+    vector<int> tmp;
 };
