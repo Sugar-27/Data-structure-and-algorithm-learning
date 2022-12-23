@@ -1,16 +1,14 @@
 //三分
 class Solution {
-   public:
+public:
     int findPeakElement(vector<int>& nums) {
-        int l = 0, r = nums.size() - 1;
+        int n = nums.size();
+        int l = 0, r = n - 1;
         while (l < r) {
-            int lmid =
-                (l + r) / 2;  //选lmid为二等分点，rmid为lmid稍加一点偏移量
-            int rmid = lmid + 1;
-            if (nums[lmid] < nums[rmid])
-                l = lmid + 1;
-            else
-                r = rmid - 1;
+            int midl = l + r >> 1;
+            int midr = midl + 1;   // 选lmid为二等分点，rmid为lmid稍加一点偏移量
+            if (nums[midl] > nums[midr]) r = midr - 1;
+            else l = midl + 1;
         }
         return r;
     }

@@ -31,3 +31,28 @@ private:
     vector<int> temp;
     int n, k;
 };
+
+// 全排列的思想
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        this->n = n, this->k = k;
+        dfs(1, 0);
+        return ans;
+    }
+private:
+    void dfs(int num, int idx) {
+        if (idx == k) {
+            ans.push_back(tmp);
+            return;
+        }
+        for (int i = num; i <= n; ++i) {
+            tmp.push_back(i);
+            dfs(i + 1, idx + 1);
+            tmp.pop_back();
+        }
+    }
+    int n, k;
+    vector<int> tmp;
+    vector<vector<int>> ans;
+};

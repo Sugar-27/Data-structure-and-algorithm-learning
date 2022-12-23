@@ -1,3 +1,4 @@
+// 最简单的防止溢出方法1:用 long long
 class Solution {
    public:
     int mySqrt(int x) {
@@ -12,5 +13,19 @@ class Solution {
             }
         }
         return right;
+    }
+};
+
+// 防止溢出的做法2，变乘为除
+class Solution {
+public:
+    int mySqrt(int x) {
+        int l = 0, r = x / 2 + 1;
+        while (l < r) {
+            int mid = l + r + 1 >> 1;
+            if (mid <= x / mid) l = mid;
+            else r = mid - 1;
+        }
+        return r;
     }
 };
