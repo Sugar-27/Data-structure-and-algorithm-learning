@@ -40,3 +40,25 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(Node* root) {
+        vector<vector<int>> ans;
+        deque<Node*> q;
+        if (!root) return ans;
+        q.push_back(root);
+        while(!q.empty()) {
+            int size = q.size();
+            ans.push_back({});
+            for (int i = 0; i < size; ++i) {
+                ans.back().push_back(q.front()->val);
+                for (auto ch : q.front()->children) {
+                    q.push_back(ch);
+                }
+                q.pop_front();
+            }
+        }
+        return ans;
+    }
+};
