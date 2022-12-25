@@ -14,14 +14,14 @@ public:
             addEdge(bi, ai);
         }
         auto ans = topsort();
-        return ans.size() == n;
+        return ans == n;
     }
 
 private:
     // 有向图找环 模板（拓扑排序）
     // 返回学的课程数
     vector<int> topsort() {
-        vector<int> order;
+        int ans;
         // 拓扑排序基于BFS，需要队列
         queue<int> q;
         // 从所有零入度点出发
@@ -31,7 +31,7 @@ private:
         while (!q.empty()) {
             int x = q.front(); // 取队头（这门课学了）
             q.pop();
-            order.push_back(x);
+            ++ans;
             // 考虑x的所有出边
             for (int y : edges[x]) {
                 inDeg[y]--; // 去掉约束关系
@@ -40,7 +40,7 @@ private:
                 }
             }
         }
-        return order;
+        return ans;
     }
 
     void addEdge(int x, int y) {
