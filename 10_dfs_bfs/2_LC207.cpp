@@ -14,7 +14,7 @@ public:
             addEdge(bi, ai);
         }
         auto ans = topsort();
-        return ans == n;
+        return ans.size() == n;
     }
 
 private:
