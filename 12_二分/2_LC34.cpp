@@ -7,8 +7,8 @@ class Solution {
         int left = 0, right = nums.size();
         while (left < right) {
             int mid = (left + right) / 2;
-            if (nums[mid] >=
-                target) {  //二分的单调性是基于条件的，只要条件是单调的就可以使用二分
+            //二分的单调性是基于条件的，只要条件是单调的就可以使用二分
+            if (nums[mid] >= target) {  
                 right = mid;
             } else {
                 left = mid + 1;
