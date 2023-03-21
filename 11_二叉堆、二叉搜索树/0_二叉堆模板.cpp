@@ -2,7 +2,7 @@
 struct Node {
     int key;
     ListNode* listNode;
-    Node(int key, listNode* listNode) : key(key), listNode(listNode) {}
+    Node(int key, ListNode* listNode) : key(key), listNode(listNode) {}
 };
 
 class BinaryHeap {
