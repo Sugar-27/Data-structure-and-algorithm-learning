@@ -13,9 +13,8 @@ class Solution {
                 // len = r - l + 1
                 int r = len + l - 1;
                 for (int p = l; p <= r; ++p) {
-                    dp[l][r] =
-                        max(dp[l][r], dp[l][p - 1] + dp[p + 1][r] +
-                                          nums[l - 1] * nums[p] * nums[r + 1]);
+                    dp[l][r] = max(dp[l][r], dp[l][p - 1] + dp[p + 1][r] + 
+                                             nums[l - 1] * nums[p] * nums[r + 1]);
                 }
             }
         }

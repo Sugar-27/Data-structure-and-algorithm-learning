@@ -4,11 +4,9 @@
 // 标准前缀和为-1 + 2 + -3 = -2
 // 最小前缀和为min(-1，-1 + 2，-1 + 2 + -3) = -2
 // 最大前缀和为max(-1，-1 + 2，-1 + 2 + -3) = 1
-// 对于不考虑首位相连时的情况，对于前i个数字，最大和就是sums[i] -
-// minSums[i]，即标准前缀和减去最小前缀和
+// 对于不考虑首位相连时的情况，对于前i个数字，最大和就是sums[i] - minSums[i]，即标准前缀和减去最小前缀和
 // 对于只考虑首位相连时的情况，最大和就是sum - (sums[i] - maxSums[i])
-// 即全部的总和减去中间最小的子数组，(sums[i] -
-// maxSums[i])表示的是子数组的最小和
+// 即全部的总和减去中间最小的子数组，(sums[i] - maxSums[i])表示的是子数组的最小和
 class Solution {
    public:
     int maxSubarraySumCircular(vector<int>& nums) {
