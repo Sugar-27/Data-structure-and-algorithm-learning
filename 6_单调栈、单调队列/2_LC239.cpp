@@ -1,3 +1,6 @@
+// 双端队列解法
+// 使用双端队列，里面存可能的最大值的坐标，每次更新的时候只要队头的坐标合法则队头是最大值
+// 对于队尾，每次更新的时候如果当前的值比队尾大，则意味着现在的队尾永远都不会用上了，因此用当前的值替换队尾，直到队尾的值比当前的值大
 class Solution {
    public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
@@ -33,23 +36,22 @@ class Solution {
 
 5*/
 
-// 双端队列解法
+
+// 优先队列解法：懒惰删除
 class Solution {
-   public:
-    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        // 使用双端队列，里面存可能的最大值的坐标，每次更新的时候只要队头的坐标合法则队头是最大值
-        // 对于队尾，每次更新的时候如果当前的值比队尾大，则意味着现在的队尾永远都不会用上了，因此用当前的值替换队尾，直到队尾的值比当前的值大
-        deque<int> q;
+  public:
+    vector<int> maxSlidingWindow(vector<int> &nums, int k) {
+        int n = nums.size();
         vector<int> ans;
-        for (int i = 0; i < nums.size(); ++i) {
-            //  i - q.front() + 1 > k
-            while (!q.empty() && q.front() <= i - k)
-                q.pop_front();
-            while (!q.empty() && nums[q.back()] <= nums[i])
-                q.pop_back();
-            q.push_back(i);
-            if (i >= k - 1)
-                ans.push_back(nums[q.front()]);
+        priority_queue<pair<int, int>> q;
+        for (int i = 0; i < k - 1; ++i) {
+            q.push({nums[i], i});
+        }
+        for (int i = k - 1; i < n; ++i) {
+            q.push({nums[i], i});
+            while (!q.empty() && q.top().second + k <= i)
+                q.pop();
+            ans.push_back(q.top().first);
         }
         return ans;
     }
