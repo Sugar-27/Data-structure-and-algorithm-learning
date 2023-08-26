@@ -37,33 +37,32 @@ int partition(vector<int>& a, int l, int r) {
 }
 */
 
-void quickSort(vector<int>& nums, int l, int r) {
-    if (l >= r)
-        return;
-    int x = nums[(l + r) >> 1];
-    int i = l, j = r;
-    while (i <= j) {
-        while (nums[i] < x)
-            ++i;
-        while (nums[j] > x)
-            --j;
-        if (i == j)
-            break;
-        if (i < j)
-            swap(nums[i++], nums[j--]);
-    }
-    quickSort(nums, l, j);
-    quickSort(nums, j + 1, r);
+void quickSort(vector<int> &nums, int l, int r) {
+  if (l >= r)
+    return;
+  int x = nums[l + r >> 1];
+  int i = l, j = r;
+  while (i <= j) {
+    while (nums[i] < x)
+      ++i;
+    while (nums[j] > x)
+      --j;
+    if (i >= j)
+      break;
+    swap(nums[i++], nums[j--]);
+  }
+  quickSort(nums, l, j);
+  quickSort(nums, j + 1, r);
 }
 
 int main() {
-    vector<int> nums = {3, 2, 4, 5, 6, 2, 9, 12, 1};
-    // vector<int> nums2 = {3, 2, 4, 5, 6, 2, 9, 12, 1};
-    for (auto& num : nums)
-        cout << num << ' ';
-    cout << endl;
-    quickSort(nums, 0, nums.size() - 1);
-    for (auto& num : nums)
-        cout << num << ' ';
-    cout << endl;
+  vector<int> nums = {3, 2, 4, 5, 6, 2, 9, 12, 1};
+  // vector<int> nums2 = {3, 2, 4, 5, 6, 2, 9, 12, 1};
+  for (auto &num : nums)
+    cout << num << ' ';
+  cout << endl;
+  quickSort(nums, 0, nums.size() - 1);
+  for (auto &num : nums)
+    cout << num << ' ';
+  cout << endl;
 }
