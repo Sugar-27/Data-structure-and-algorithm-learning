@@ -1,16 +1,16 @@
 class Solution {
 public:
-    int maxProduct(vector<int>& nums) {
-        vector<int> fmax(nums.size() + 1, 1);
-        vector<int> fmin(nums.size() + 1, 1);
-        for (int i = 1; i <= nums.size(); i++) {
-            fmax[i] = max(max(fmax[i - 1] * nums[i - 1], fmin[i - 1] * nums[i - 1]), nums[i - 1]);
-            fmin[i] = min(min(fmax[i - 1] * nums[i - 1], fmin[i - 1] * nums[i - 1]), nums[i - 1]);
-        }
-        int ans = -1e9;
-        for (int i = 1; i < fmax.size(); ++i) { // 需要从1开始，因为fmax[0]是边界而没有记录原来数组的乘积信息
-            ans = max(ans, fmax[i]);
-        }
-        return ans;
+  int maxProduct(vector<int> &nums) {
+    int n = nums.size();
+    vector<float> dp_max(n, 1);
+    vector<float> dp_min(n, 1);
+    dp_max[0] = dp_min[0] = nums[0];
+    for (int i = 1; i < n; ++i) {
+      dp_max[i] = max((float)nums[i],
+                      max(dp_max[i - 1] * nums[i], dp_min[i - 1] * nums[i]));
+      dp_min[i] = min((float)nums[i],
+                      min(dp_max[i - 1] * nums[i], dp_min[i - 1] * nums[i]));
     }
+    return *max_element(dp_max.begin(), dp_max.end());
+  }
 };
